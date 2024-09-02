@@ -13,17 +13,19 @@ namespace fps
 		std::chrono::duration<float> m_duration{ 0 };
 
 		const float m_timeSpan{ 0 };
+
+		unsigned int m_currentFPS{ 0 };
 	public:
 		// public methods
-		FPStimer(const float maxFPS)
-			: m_timeSpan(1.0f / maxFPS)
+		FPStimer(const unsigned int maxFPS)
+			: m_timeSpan(1.0f / static_cast<float>(maxFPS))
 		{
 			m_timePoint1 = std::chrono::high_resolution_clock::now();
 		}
 
 		~FPStimer()
 		{
-
+			
 		}
 
 		bool getUpdate()
@@ -36,6 +38,12 @@ namespace fps
 				return true;
 			}
 			return false;
+		}
+
+		unsigned int getFramerate()
+		{
+			m_currentFPS = std::round(1.0f / m_duration.count());
+			return m_currentFPS;
 		}
 	};
 }
